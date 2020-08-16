@@ -36,6 +36,9 @@ class NluQuery(Message):
             - String (optional)
             - A request identifier. If provided, it will be passed back in the response
               (:class:`NluIntentParsed` or :class:`NluIntentNotRecognized`).
+          * - implicit
+            - Boolean
+            - A boolean value if the command was sent without recognizing a wake word first
           * - intentFilter
             - List of strings (optional)
             - A list of intent names to restrict the NLU resolution on.
@@ -68,6 +71,8 @@ class NluQuery(Message):
 
     input: str
     """The text to send to the NLU component."""
+    implicit: typing.Optional[bool] = False
+    """A boolean value if the command was sent without recognizing a wake word first"""
     site_id: str = "default"
     """The id of the site where the NLU component is located.
 
@@ -481,6 +486,9 @@ class NluIntentNotRecognized(Message):
           * - siteId
             - String
             - Site where the user interaction took place. Defaults to ``"default"``.
+          * - implicit
+            - Boolean(Optional)
+            - A boolean value if the command was sent without recognizing a wake word first
           * - id
             - String (optional)
             - The request identifier from the NLU query (:class:`NluQuery`), if any.
@@ -504,7 +512,9 @@ class NluIntentNotRecognized(Message):
     input: str
     """The input, if any, that generated this event."""
     site_id: str = "default"
-    """Site where the user interaction took place.
+    """Site where the user interaction took place."""
+    implicit: typing.Optional[bool] = False
+    """A boolean value if the command was sent without recognizing a wake word first
 
     Note
     ----
